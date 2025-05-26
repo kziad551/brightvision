@@ -1,26 +1,127 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'TheYearofHandicrafts';
+  src: url('/TheYearofHandicrafts-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brand-purple: #24135F;
+  --brand-red: #F94239;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  /* Updated to use TheYearofHandicrafts as the primary sans font via Tailwind config */
+  --font-sans: 'TheYearofHandicrafts', var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    /* Consider if your dark mode scheme needs to align with Figma */
+    --background: #0a0a0a; /* Example, adjust if needed */
     --foreground: #ededed;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background); /* Uses theme variable */
+  color: var(--color-foreground);   /* Uses theme variable */
+  font-family: 'TheYearofHandicrafts', Arial, Helvetica, sans-serif; /* Explicitly set */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Prevent text cropping */
+.text-right {
+  text-align: right; /* Default for dir="rtl" but can be explicit */
+}
+/* Removed text-align-last: right; as it might not be needed and can have unintended effects */
+
+/* Ensure proper Arabic text rendering */
+/* The [dir="rtl"] in layout.js and html tag handles this mostly. */
+/* unicode-bidi: bidi-override; can sometimes be problematic, use with caution. */
+/* TailwindCSS-RTL plugin should handle most directional styling. */
+
+/* Custom blob style for About Us section (approximation) */
+.about-us-blob {
+  position: absolute;
+  top: 5%;
+  left: -15%; /* Adjust to pull it off-screen as in Figma */
+  width: 60%; /* Adjust as needed */
+  height: 90%; /* Adjust as needed */
+  background-color: var(--brand-purple); /* Or a slightly different shade if needed */
+  border-top-right-radius: 250px;
+  border-bottom-right-radius: 200px;
+  border-top-left-radius: 150px;
+  border-bottom-left-radius: 300px;
+  transform: rotate(-15deg); /* Example rotation */
+  opacity: 0.8; /* Or as needed */
+  z-index: 0;
+}
+
+/* Custom blob style for Services section */
+.services-blob {
+  position: relative; /* To contain the service items */
+  background-color: #F94239; /* Figma red */
+  padding: 60px 40px; /* Adjust padding */
+  margin-top: 2rem;
+  /* Approximate blob shape using border-radius. For exact Figma shape, SVG is better. */
+  /* This is a simplified example; complex blobs need more specific border-radius values per corner or an SVG mask/background. */
+  border-radius: 80px 20px 100px 30px / 30px 100px 50px 90px; /* Example complex radius */
+  /* A simpler, more common approach for a generally organic shape: */
+  /* border-radius: 6rem; */
+  /* Or a very specific one if you can break down the Figma shape: */
+  /* border-top-left-radius: 150px;
+     border-top-right-radius: 200px;
+     border-bottom-left-radius: 180px;
+     border-bottom-right-radius: 220px; */
+  /* For a large flowing shape as in Figma, it might be better to use an SVG background or a pseudo-element.
+     Let's try a simpler large radius for now. */
+  border-radius: 5rem; /* Adjust to achieve desired roundness */
+  overflow: hidden; /* Ensure content stays within if it's a pseudo-element */
+}
+
+/* If using a pseudo-element for the blob to allow content to be easily layered */
+.services-section-container::before {
+ content: "";
+  position: absolute;
+  top: 5%; /* Adjust as needed */
+  right: 5%; /* Adjust as needed */
+  left: 5%; /* Adjust as needed */
+  bottom: 5%; /* Adjust as needed */
+  background-color: #F94239;
+  border-radius: 6rem; /* Or more complex radii */
+  z-index: 0; /* Behind the content */
+  transform: skewY(-5deg) scale(1.1); /* Example transform for organic feel */
+  opacity: 1; /* Make sure it's visible */
+}
+
+.footer-map-placeholder {
+  background-color: #4A2F7C; /* A slightly different purple for contrast or same brand-purple */
+  height: 250px; /* Or adjust as per design */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+}
+@keyframes scroll-logos {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* second copy starts halfway */
+}
+
+/* speed = 30 s linear infinite */
+.animate-scroll-logos {
+  animation: scroll-logos 30s linear infinite;
+}
+
