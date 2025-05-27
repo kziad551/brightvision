@@ -1,17 +1,18 @@
 'use client';
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ClientsSlider from "../components/ClientsSlider";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 const services = [
   {
-    icon: "/assets/servicesIcons/Group 29.png", // Keep existing icons, ensure they are suitable for white display
+    icon: "/assets/servicesIcons/consultant.png", // Keep existing icons, ensure they are suitable for white display
     title: "الاستشارات والتخطيط الاستراتيجي",
     desc: "استشارات العلامة التجارية وتطوير الهوية وتحليل السوق والمنافسين وبناء استراتيجيات النمو وإطلاق الخدمات",
   },
   {
-    icon: "/assets/servicesIcons/dslr-camera 1.png",
+    icon: "/assets/servicesIcons/production.png",
     title: "الإنتاج الإعلامي والتصوير",
     desc: "تصوير فوتوغرافي، إنتاج وإخراج فيديوهات، سبوتات، قصص وطابية مواقع إعلانات باستخدام أحدث التقنيات",
   },
@@ -21,17 +22,17 @@ const services = [
     desc: "تصميم الشعارات والهويات البصرية وتطوير العلامات التجارية وتحريك الشعارات",
   },
   {
-    icon: "/assets/servicesIcons/domain (1) 2.png",
+    icon: "/assets/servicesIcons/web.png",
     title: "تصميم وتطوير المواقع والتطبيقات",
     desc: "تطوير مواقع إلكترونية وتطبيقات بأنظمتها المختلفة تصميم متاجر - مواقع - برمجة مخصصة",
   },
   {
-    icon: "/assets/servicesIcons/cost 1.png",
+    icon: "/assets/servicesIcons/ads.png",
     title: "الإعلانات الرقمية والتسويق الممول",
     desc: "إدارة حملات جوجل وفيسبوك والحملات على تيك توك وسناب شات التسويق عبر المؤثرين",
   },
   {
-    icon: "/assets/servicesIcons/Vector.png",
+    icon: "/assets/servicesIcons/socialmanage.png",
     title: "إدارة منصات التواصل الاجتماعي",
     desc: "إدارة حسابات استراتيجيات السوشيال ميديا، ابتكار أفكار، صناعة المحتوى والردود اليومية",
   },
@@ -47,16 +48,61 @@ const clients = [ // Assuming these paths are correct
   "/assets/clientslogos/logo in circle RGB white.png",
 ];
 
-// Dummy works data - replace with your actual data
-const works = [
-  { id: 1, image: "/assets/works/work1_placeholder.png", title: "اسم العمل 1" }, // Replace with actual image paths
-  { id: 2, image: "/assets/works/work2_placeholder.png", title: "اسم العمل 2" },
-  { id: 3, image: "/assets/works/work3_placeholder.png", title: "اسم العمل 3" },
-  { id: 4, image: "/assets/works/work4_placeholder.png", title: "اسم العمل 4" },
-];
-
 export default function Home() {
-  // ClientsSlider logic is in its own component, no need for duplicate slider logic here.
+  const [works, setWorks] = useState([]);
+  const [worksLoading, setWorksLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchWorks = async () => {
+      try {
+        // Use our cached API route
+        const response = await fetch('/api/works', {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.error) {
+          throw new Error(data.message || 'Failed to fetch works');
+        }
+        
+        // Filter for Line 1 and Line 2 only
+        const filteredProjects = data.filter(project => {
+          const lineNumber = parseInt((project.project_meta || 'line 1').replace('line ', ''));
+          return lineNumber === 1 || lineNumber === 2;
+        });
+        
+        setWorks(filteredProjects);
+        
+      } catch (err) {
+        console.error('Works API fetch failed:', err);
+        setWorks([]);
+      } finally {
+        setWorksLoading(false);
+      }
+    };
+
+    fetchWorks();
+  }, []); // Empty dependency array - only run once
+
+  const getCategoryName = (project) => {
+    if (project._embedded && project._embedded['wp:term'] && project._embedded['wp:term'][0] && project._embedded['wp:term'][0][0]) {
+      return project._embedded['wp:term'][0][0].name;
+    }
+    return 'غير محدد';
+  };
+
+  const handleProjectClick = (projectId) => {
+    router.push(`/works/${projectId}`);
+  };
 
   return (
     <div className="min-h-screen font-handicraft"> {/* Apply custom font globally if not on body */}
@@ -168,13 +214,13 @@ export default function Home() {
     key={title}
     className="w-[340px] flex items-start gap-4 rtl:gap-4"
   >
-      {/* icon bubble */}
+      {/* icon bubble */}
       <div className="shrink-0 w-[56px] h-[56px] rounded-full bg-white
                       flex items-center justify-center shadow-lg">
         <Image src={icon} alt={title} width={28} height={28} />
       </div>
 
-      {/* text */}
+      {/* text */}
       <div className="text-right">
         <h3 className="text-[#24135F] text-[20px]  mb-1 leading-tight">
           {title}
@@ -194,35 +240,72 @@ export default function Home() {
   </div>
 </section>
 
-      {/* Works Section - Figma Style */}
-      <section className="py-24 md:py-32 px-4 bg-white">
-        <div className="container mx-auto">
-          <h2 className="text-[#24135F] text-[60px] md:text-[80px] font-medium mb-12 md:mb-16 text-right">أعمــالنــــا</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {works.map((work) => (
-              <div key={work.id} className="group aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 relative">
-                {/* Replace with actual images */}
-                <Image src={work.image} alt={work.title} layout="fill" className="object-cover group-hover:scale-105 transition-transform duration-300" />
-                <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center">
-                  <h3 className="text-white text-xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">{work.title}</h3>
-                </div>
-              </div>
-            ))}
-             {/* If no works yet, show placeholders that look good */}
-            {!works.length && [1,2,3,4].map((i) => (
-              <div key={i} className="aspect-square bg-gray-200 rounded-xl flex items-center justify-center shadow-lg">
-                <p className="text-gray-500">عملنا قريباً</p>
-              </div>
-            ))}
-          </div>
-           <div className="text-center mt-16">
+      {/* Works Section - Dynamic from API */}
+      <section className="py-24 md:py-32 px-4 bg-[#24135F]">
+        <div className="container mx-auto max-w-6xl">
+          
+          {/* Header with title and button */}
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-12 md:mb-16">
+            <h2 className="text-[#F94239] font-medium text-[48px] md:text-[64px] lg:text-[80px]">
+              أعمــالنــــا
+            </h2>
+            
             <Link
-                href="/works"
-                className="bg-[#24135F] text-white text-[18px] md:text-[20px] rounded-full px-10 py-4 hover:bg-[#F94239] transition duration-300"
+              href="/works"
+              className="mt-6 sm:mt-0 bg-transparent border-2 border-[#F94239]
+                         text-[#F94239] hover:bg-[#F94239] hover:text-white
+                         transition rounded-full px-10 py-3 text-[18px] md:text-[20px]"
             >
-                شاهد كل أعمالنا
+              كل الأعمــال
             </Link>
-        </div>
+          </div>
+
+          {/* Projects Grid */}
+          {worksLoading ? (
+            <div className="text-center py-16">
+              <div className="text-white text-2xl">جاري التحميل...</div>
+            </div>
+          ) : works.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {works.map((project, index) => (
+                <div
+                  key={project.id}
+                  className="relative group cursor-pointer overflow-hidden rounded-lg"
+                  onClick={() => handleProjectClick(project.id)}
+                >
+                  {/* Project Image */}
+                  <div className="relative w-full aspect-square bg-[#24135F]">
+                    <Image
+                      src={project.featured_image_url || '/assets/placeholder.jpg'}
+                      alt={project.title.rendered || 'مشروع'}
+                      fill
+                      className="object-contain transition-transform duration-300 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      onError={(e) => {
+                        e.target.src = '/assets/placeholder.jpg';
+                      }}
+                    />
+                    
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-end justify-center">
+                      <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-6 pb-8">
+                        <h3 className="text-[24px] font-[600] mb-2">
+                          {project.title.rendered || 'مشروع بدون عنوان'}
+                        </h3>
+                        <p className="text-[18px] text-[#FFB808]">
+                          {getCategoryName(project)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-white text-[24px]">لا توجد أعمال متاحة حالياً</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -237,26 +320,20 @@ export default function Home() {
     </h2>
 
     {/* Auto-scrolling logo strip */}
-    <div
-      className="relative overflow-hidden"
-      /* keep the strip the same height no matter what */
-      style={{ height: '110px' }}
-    >
-      <div
-        /* moving flex row */
-        className="flex items-center gap-20 animate-scroll-logos"
-      >
-        {/* render two copies so it loops smoothly */}
-        {[...clients, ...clients].map((src, i) => (
-          <Image
-            key={i}
-            src={src}
-            alt="logo"
-            height={80}      /* keeps logos ~80 px tall */
-            width={120}      /* width auto-adjusted in Next.js */
-            className="object-contain grayscale-0"
-            unoptimized      /* remove if you prefer Next optimisation */
-          />
+    <div className="relative overflow-hidden w-full">
+      <div className="flex items-center gap-20 animate-scroll-logos">
+        {/* Render logos multiple times for seamless loop */}
+        {[...clients, ...clients, ...clients].map((src, i) => (
+          <div key={i} className="flex-shrink-0">
+            <Image
+              src={src}
+              alt="logo"
+              height={80}
+              width={120}
+              className="object-contain grayscale-0 h-20 w-auto"
+              unoptimized
+            />
+          </div>
         ))}
       </div>
     </div>

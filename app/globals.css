@@ -117,11 +117,13 @@ body {
 }
 @keyframes scroll-logos {
   0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* second copy starts halfway */
+  100% { transform: translateX(calc(-100% / 3)); }
 }
 
-/* speed = 30 s linear infinite */
+/* Seamless infinite scroll - adjust speed as needed */
 .animate-scroll-logos {
   animation: scroll-logos 30s linear infinite;
+  display: flex;
+  width: max-content;
 }
 

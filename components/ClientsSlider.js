@@ -1,39 +1,98 @@
 'use client';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
 
 export default function ClientsSlider({ clients }) {
   const sliderRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    const slider = sliderRef.current;
-    let scrollAmount = 0;
-    const interval = setInterval(() => {
-      if (slider) {
-        scrollAmount += 1;
-        if (scrollAmount >= slider.scrollWidth / 2) scrollAmount = 0;
-        slider.scrollLeft = scrollAmount;
-      }
-    }, 20);
-    return () => clearInterval(interval);
+    setIsMounted(true);
   }, []);
 
-  return (
-    <div className="overflow-hidden">
-      <div className="overflow-x-auto whitespace-nowrap" ref={sliderRef} style={{direction:'ltr'}}>
-        <div className="inline-flex gap-12 min-w-full">
-          {clients.concat(clients).map((logo, idx) => (
-            <div key={idx} className="flex-shrink-0 w-48 h-32 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <Image 
-                src={logo} 
-                alt={`شعار عميل ${idx+1}`} 
-                width={160} 
-                height={100} 
-                style={{objectFit: 'contain'}} 
+  useEffect(() => {
+    if (!isMounted) return;
+    
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    let animationId;
+    let scrollAmount = 0;
+    const scrollSpeed = 1;
+
+    const animate = () => {
+      if (!isPaused && slider && isMounted) {
+        scrollAmount += scrollSpeed;
+        
+        // Reset when we've scrolled through one complete set
+        if (scrollAmount >= slider.scrollWidth / 2) {
+          scrollAmount = 0;
+        }
+        
+        slider.scrollLeft = scrollAmount;
+      }
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, [isPaused, isMounted]);
+
+  // Don't render animation on server
+  if (!isMounted) {
+    return (
+      <div className="relative overflow-hidden">
+        <div className="flex items-center gap-16 justify-center">
+          {clients.slice(0, 5).map((client, index) => (
+            <div key={index} className="flex-shrink-0">
+              <Image
+                src={client}
+                alt={`Client ${index + 1}`}
+                width={120}
+                height={80}
+                className="object-contain filter brightness-0 invert opacity-70"
+                style={{ minWidth: '120px', height: '80px' }}
               />
             </div>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  return (
+    <div 
+      className="relative overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div
+        ref={sliderRef}
+        className="flex items-center gap-16 overflow-hidden"
+        style={{ 
+          scrollBehavior: 'auto',
+          width: '100%'
+        }}
+      >
+        {/* Render clients twice for seamless loop */}
+        {[...clients, ...clients].map((client, index) => (
+          <div key={index} className="flex-shrink-0">
+            <Image
+              src={client}
+              alt={`Client ${index + 1}`}
+              width={120}
+              height={80}
+              className="object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity duration-300"
+              style={{ minWidth: '120px', height: '80px' }}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
