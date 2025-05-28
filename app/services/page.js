@@ -93,32 +93,66 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-[#24135F] text-white">
       {/* Main Content */}
-      <div className="pt-32 pb-16">
+      <div className="pt-48 pb-16">
         <div className="container mx-auto max-w-6xl px-4 md:px-8">
           
-          {/* خدماتنا Section */}
-          <section className="mb-20 relative">
-            {/* Background Icon */}
-            <div className="absolute top-0 right-0 opacity-10 z-0">
+          {/* Page Title */}
+          <section className="mb-16 text-center lg:text-right relative">
+            <h1 className="text-[#FFB808] text-[40px] md:text-[60px] lg:text-[80px] font-[500] leading-[1.2] mb-8">
+              خدمــاتنــــــا
+            </h1>
+            
+            {/* Services Icon */}
+            <div className="absolute -bottom-4 right-0 lg:right-16 opacity-20">
               <Image 
                 src="/assets/servicesicon.png" 
                 alt="خدماتنا" 
-                width={220} 
-                height={220}
-                className="object-contain"
+                width={180} 
+                height={180}
+                className="object-contain w-[120px] h-[120px] md:w-[150px] md:h-[150px] lg:w-[180px] lg:h-[180px]"
               />
             </div>
-            
-            <div className="relative z-10">
-              <h1 className="text-[#FFB808] text-[80px] font-[500] mb-16 text-right">
-                خدمــاتنــــــا
-              </h1>
-            </div>
           </section>
+
+          {/* Mobile/Tablet Services - Box Layout */}
+          <div className="block lg:hidden">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              {allServices.map((service, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#F94239] rounded-lg p-4 md:p-6 text-center"
+                >
+                  {/* icon */}
+                  <div className="w-[40px] h-[40px] md:w-[48px] md:h-[48px] rounded-full bg-white
+                                  flex items-center justify-center shadow-lg mx-auto mb-3 md:mb-4">
+                    <Image src={service.icon} alt={service.title} width={20} height={20} className="md:w-[24px] md:h-[24px]" />
+                  </div>
+
+                  {/* text */}
+                  <div className="text-center">
+                    <h3 className="text-white text-[14px] md:text-[16px] mb-2 leading-tight font-medium">
+                      {service.title}
+                    </h3>
+
+                    <div className="space-y-1 md:space-y-2">
+                      {service.items.map((item, itemIdx) => (
+                        <div key={itemIdx} className="flex items-start gap-1 md:gap-2 justify-center">
+                          <div className="w-1 h-1 md:w-1.5 md:h-1.5 bg-white rounded-full mt-1.5 md:mt-2 flex-shrink-0"></div>
+                          <p className="text-white text-[10px] md:text-[12px] leading-[1.4] text-center">
+                            {item}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Full Width Services with Background */}
-        <div className="relative w-full">
+        {/* Desktop Services - Full Width with Background */}
+        <div className="hidden lg:block relative w-full">
           {/* Background blob image - Full Width */}
           <img
             src="/assets/servicesBackround.png"
@@ -127,26 +161,32 @@ export default function ServicesPage() {
           />
 
           {/* Services Grid on top of blob */}
-          <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8 lg:px-16">
-            <div className="container mx-auto max-w-7xl">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+          <div className="absolute inset-0 flex items-center justify-center py-12 lg:py-16 xl:py-20">
+            <div className="container mx-auto px-8 lg:px-12 xl:px-20 2xl:px-32">
+              <div className="grid grid-cols-3 gap-x-4 lg:gap-x-6 xl:gap-x-8 gap-y-6 lg:gap-y-8">
                 {allServices.map((service, idx) => (
-                  <div key={idx} className="flex items-start gap-4 text-right">
+                  <div key={idx} className="flex items-start gap-2 lg:gap-3 xl:gap-4 text-right">
                     {/* Icon bubble */}
-                    <div className="shrink-0 w-[56px] h-[56px] rounded-full bg-white flex items-center justify-center shadow-lg">
-                      <Image src={service.icon} alt={service.title} width={38} height={38} />
+                    <div className="shrink-0 w-[40px] h-[40px] lg:w-[48px] lg:h-[48px] xl:w-[56px] xl:h-[56px] rounded-full bg-white flex items-center justify-center shadow-lg">
+                      <Image 
+                        src={service.icon} 
+                        alt={service.title} 
+                        width={28} 
+                        height={28} 
+                        className="w-[20px] h-[20px] lg:w-[24px] lg:h-[24px] xl:w-[28px] xl:h-[28px]"
+                      />
                     </div>
                     
                     {/* Text content */}
                     <div className="flex-1">
-                      <h3 className="text-[#24135F] text-[20px] font-[600] mb-3 leading-tight">
+                      <h3 className="text-[#24135F] text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[20px] font-[600] mb-2 lg:mb-3 leading-tight">
                         {service.title}
                       </h3>
-                      <div className="space-y-2">
+                      <div className="space-y-1 lg:space-y-1.5 xl:space-y-2">
                         {service.items.map((item, itemIdx) => (
-                          <div key={itemIdx} className="flex items-start gap-2">
-                            <div className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0"></div>
-                            <p className="text-white text-[16px] leading-[1.4]">
+                          <div key={itemIdx} className="flex items-start gap-1.5 lg:gap-2">
+                            <div className="w-1 h-1 lg:w-1.5 lg:h-1.5 bg-white rounded-full mt-1 lg:mt-1.5 xl:mt-2 flex-shrink-0"></div>
+                            <p className="text-white text-[11px] lg:text-[12px] xl:text-[14px] 2xl:text-[16px] leading-[1.3] lg:leading-[1.4]">
                               {item}
                             </p>
                           </div>

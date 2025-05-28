@@ -107,25 +107,72 @@ export default function Home() {
   return (
     <div className="min-h-screen font-handicraft"> {/* Apply custom font globally if not on body */}
       {/* Hero Section - Assuming Navbar height is approx 80-96px, adjust pt-20 or use min-h-screen with padding */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 pt-24 md:pt-32 bg-white">
-        <div className="container mx-auto text-center z-10">
-          <h1 className="text-[70px] sm:text-[90px] md:text-[100px] lg:text-[120px] leading-[1.1] font-bold text-[#F94239] mb-8 max-w-[1200px] mx-auto">
+      <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 md:pt-24 lg:pt-32 bg-white">
+        
+        {/* Desktop Flipicons - Left and Right - HIDDEN FOR NOW */}
+        {/* <div className="hidden md:block absolute left-8 lg:left-16 xl:left-24 top-1/2 transform -translate-y-1/2 z-10">
+          <Image
+            src="/flipicon.png"
+            alt="Flip Icon"
+            width={80}
+            height={80}
+            className="animate-flip-rotate lg:w-[100px] lg:h-[100px]"
+          />
+        </div>
+        
+        <div className="hidden md:block absolute right-8 lg:right-16 xl:right-24 top-1/2 transform -translate-y-1/2 z-10">
+          <Image
+            src="/flipicon.png"
+            alt="Flip Icon"
+            width={80}
+            height={80}
+            className="animate-flip-rotate lg:w-[100px] lg:h-[100px]"
+          />
+        </div> */}
+
+        <div className="container mx-auto text-center z-10 relative">
+          
+          {/* Mobile Flipicon - Top - HIDDEN FOR NOW */}
+          {/* <div className="block md:hidden mb-8">
+            <Image
+              src="/flipicon.png"
+              alt="Flip Icon"
+              width={60}
+              height={60}
+              className="animate-flip-rotate mx-auto"
+            />
+          </div> */}
+          
+          {/* Hero Text */}
+          <div className="text-[40px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] leading-[1.3] font-bold text-[#F94239] mb-8 max-w-[1200px] mx-auto">
             نحــــوّل الحُلـــم لعلامــــة
             <br />
-            تَبقــــــــى وتَتـــــــرُك أثـــــــر
-          </h1>
+            <span className="block mt-4 md:mt-6 lg:mt-8">تَبقــــــــى وتَتـــــــرُك أثـــــــر</span>
+          </div>
+          
+          {/* Mobile Flipicon - Bottom - HIDDEN FOR NOW */}
+          {/* <div className="block md:hidden mt-8">
+            <Image
+              src="/flipicon.png"
+              alt="Flip Icon"
+              width={60}
+              height={60}
+              className="animate-flip-rotate mx-auto"
+            />
+          </div> */}
         </div>
-        <div className="absolute bottom-12 left-0 right-0 z-10 px-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center max-w-[1200px] mx-auto text-center sm:text-right">
-            <Link href="#" className="text-[20px] md:text-[24px] font-normal text-[#F94239] mb-2 sm:mb-0">بصمتـــــك تسبقـــــك</Link>
-            <Link href="#" className="text-[20px] md:text-[24px] font-normal text-[#F94239]">الـمحتوى عندنـــا، ماهو شغـــل.. هو شغــــف</Link>
+        
+        <div className="absolute bottom-8 md:bottom-12 left-0 right-0 z-10 px-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center max-w-[1200px] mx-auto text-center sm:text-right gap-4 sm:gap-0">
+            <Link href="#" className="text-[16px] md:text-[20px] lg:text-[24px] font-normal text-[#F94239] order-2 sm:order-1">بصمتـــــك تسبقـــــك</Link>
+            <Link href="#" className="text-[16px] md:text-[20px] lg:text-[24px] font-normal text-[#F94239] order-1 sm:order-2">الـمحتوى عندنـــا، ماهو شغـــل.. هو شغــــف</Link>
           </div>
           <div className="w-full max-w-[1200px] mx-auto border-t border-[#F94239] mt-4"></div>
         </div>
       </section>
 
 {/* ───── About Us – matches Figma ───── */}
-<section className="relative bg-[#24135F] text-white py-24 md:py-32 overflow-hidden">
+<section className="relative bg-[#24135F] text-white py-16 md:py-24 lg:py-32 overflow-hidden">
 
   {/* right-edge outline  */}
   <img
@@ -133,32 +180,32 @@ export default function Home() {
     alt=""
     className="pointer-events-none select-none
                absolute right-0 top-1/2
-               w-[25vw] max-w-[260px] -translate-y-1/2"
+               w-[30vw] md:w-[25vw] max-w-[260px] -translate-y-1/2 opacity-50 md:opacity-100"
   />
 
-  <div className="container mx-auto relative z-10">
+  <div className="container mx-auto relative z-10 px-4">
 
     {/* section title (right-aligned like other headers) */}
-    <h2 className="text-[#F94239] text-[48px] md:text-[64px] lg:text-[80px]
-                   font-medium mb-12 md:mb-16 text-right">
+    <h2 className="text-[#F94239] text-[32px] sm:text-[48px] md:text-[64px] lg:text-[80px]
+                   font-medium mb-8 md:mb-12 lg:mb-16 text-right">
       عنــــا
     </h2>
 
     {/* centred paragraph block */}
-    <div className="mx-auto text-center max-w-3xl space-y-6
-                    text-[24px] md:text-[24px] leading-[1.3]">
+    <div className="mx-auto text-center max-w-3xl space-y-4 md:space-y-6
+                    text-[18px] md:text-[22px] lg:text-[24px] leading-[1.6] md:leading-[1.4] lg:leading-[1.3]">
 
       <p>تأسست شركة ذا برايت فيجن في عام&nbsp;2019.</p>
       <p>ونمت بسرعة لتصبح من أبرز شركات التسويق والإعلان في الشرق الأوسط.</p>
       <p>يقع مقرنا الرئيسي في قطر، ونعمل على التوسع في دول الخليج ولبنان ومصر.</p>
 
       <p className="font-semibold">منذ البداية، كان هدفنا واضحاً:</p>
-      <p className="leading-[1.3]">نساعد العلامات التجارية على التميز من خلال أفكار إبداعية
+      <p className="leading-[1.7] md:leading-[1.5] lg:leading-[1.3]">نساعد العلامات التجارية على التميز من خلال أفكار إبداعية
          واستراتيجيات ذكية تحقق نتائج حقيقية.</p>
     </div>
 
-    <div className="mt-12 text-center">
-      <Link href="/about" className="text-[#F94239] text-[20px] md:text-[24px] hover:underline">
+    <div className="mt-8 md:mt-12 text-center">
+      <Link href="/about" className="text-[#F94239] text-[18px] md:text-[20px] lg:text-[24px] hover:underline">
         عرض المزيد ...
       </Link>
     </div>
@@ -167,106 +214,124 @@ export default function Home() {
 
 
 {/* ───── Services Section – matches Figma ───── */}
-<section className="relative bg-[#24135F] py-24 md:py-32 overflow-hidden">
-  <div className="container mx-auto relative z-10">
+<section className="relative bg-[#24135F] py-16 md:py-24 lg:py-32 overflow-hidden">
+  <div className="container mx-auto relative z-10 px-4">
 
     {/* Header ( title  + pill-button ) */}
-    <div className="flex flex-col sm:flex-row justify-between items-center mb-12 md:mb-16">
-      <h2 className="text-[#F94239] font-medium text-[48px] md:text-[64px] lg:text-[80px]">
+    <div className="flex flex-col sm:flex-row justify-between items-center mb-8 md:mb-12 lg:mb-16 gap-6 sm:gap-4">
+      <h2 className="text-[#F94239] font-medium text-[32px] sm:text-[48px] md:text-[64px] lg:text-[80px] order-2 sm:order-1">
         خدمــاتنــــــا
       </h2>
 
       <Link
         href="/services"
-        className="mt-6 sm:mt-0 bg-transparent border-2 border-[#F94239]
+        className="order-1 sm:order-2 bg-transparent border-2 border-[#F94239]
                    text-[#F94239] hover:bg-[#F94239] hover:text-white
-                   transition rounded-full px-10 py-3 text-[18px] md:text-[20px]"
+                   transition rounded-full px-6 md:px-10 py-2 md:py-3 text-[16px] md:text-[18px] lg:text-[20px]"
       >
         كل الخدمات
       </Link>
     </div>
 
-    {/* ─── Red blob with service cards ─── */}
-    <div className="relative">
+    {/* Mobile/Tablet Services - Box Layout */}
+    <div className="block lg:hidden">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        {services.map(({ icon, title, desc }) => (
+          <div
+            key={title}
+            className="bg-[#F94239] rounded-lg p-4 md:p-6 text-center"
+          >
+            {/* icon */}
+            <div className="w-[40px] h-[40px] md:w-[48px] md:h-[48px] rounded-full bg-white
+                            flex items-center justify-center shadow-lg mx-auto mb-3 md:mb-4">
+              <Image src={icon} alt={title} width={20} height={20} className="md:w-[24px] md:h-[24px]" />
+            </div>
 
-      {/* background blob image  */}
-      <img
-        src="/assets/servicesBackround.png"
-        alt="Services background"
-        className="block w-full pointer-events-none select-none"
-        /* keeps aspect-ratio and scales responsively */
-      />
+            {/* text */}
+            <div className="text-center">
+              <h3 className="text-white text-[14px] md:text-[16px] mb-2 leading-tight font-medium">
+                {title}
+              </h3>
 
-      {/* grid on top of blob ( position absolute ) */}
-      <div
-        className="
-          absolute inset-0
-          flex items-center justify-center
-          px-6 md:px-12 lg:px-20
-        "
-      >
- {/* grid inside the blob …                                 */}
-<div className="grid gap-y-12 gap-x-10
-                grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-
-  {services.map(({ icon, title, desc }) => (
-    <div
-    key={title}
-    className="w-[340px] flex items-start gap-4 rtl:gap-4"
-  >
-      {/* icon bubble */}
-      <div className="shrink-0 w-[56px] h-[56px] rounded-full bg-white
-                      flex items-center justify-center shadow-lg">
-        <Image src={icon} alt={title} width={28} height={28} />
-      </div>
-
-      {/* text */}
-      <div className="text-right">
-        <h3 className="text-[#24135F] text-[20px]  mb-1 leading-tight">
-          {title}
-        </h3>
-
-        <p className="text-white text-[15px] leading-relaxed opacity-90">
-          {desc}
-        </p>
+              <p className="text-white text-[11px] md:text-[13px] leading-relaxed opacity-90">
+                {desc}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
-  ))}
 
-</div>
+    {/* Desktop Services - Original Blob Layout */}
+    <div className="hidden lg:block">
+      <div className="relative">
+        {/* background blob image  */}
+        <img
+          src="/assets/servicesBackround.png"
+          alt="Services background"
+          className="block w-full pointer-events-none select-none"
+        />
 
+        {/* grid on top of blob ( position absolute ) */}
+        <div className="absolute inset-0 flex items-center justify-center px-12 xl:px-20">
+          <div className="grid gap-y-12 gap-x-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl">
+            {services.map(({ icon, title, desc }) => (
+              <div
+                key={title}
+                className="w-full max-w-[340px] mx-auto flex items-start gap-4 rtl:gap-4"
+              >
+                {/* icon bubble */}
+                <div className="shrink-0 w-[56px] h-[56px] rounded-full bg-white
+                                flex items-center justify-center shadow-lg">
+                  <Image src={icon} alt={title} width={28} height={28} />
+                </div>
+
+                {/* text */}
+                <div className="text-right">
+                  <h3 className="text-[#24135F] text-[20px] mb-1 leading-tight">
+                    {title}
+                  </h3>
+
+                  <p className="text-white text-[15px] leading-relaxed opacity-90">
+                    {desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
       {/* Works Section - Dynamic from API */}
-      <section className="py-24 md:py-32 px-4 bg-[#24135F]">
+      <section className="py-16 md:py-24 lg:py-32 px-4 bg-[#24135F]">
         <div className="container mx-auto max-w-6xl">
           
           {/* Header with title and button */}
-          <div className="flex flex-col sm:flex-row justify-between items-center mb-12 md:mb-16">
-            <h2 className="text-[#F94239] font-medium text-[48px] md:text-[64px] lg:text-[80px]">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-8 md:mb-12 lg:mb-16 gap-6 sm:gap-4">
+            <h2 className="text-[#F94239] font-medium text-[32px] sm:text-[48px] md:text-[64px] lg:text-[80px] order-2 sm:order-1">
               أعمــالنــــا
             </h2>
             
             <Link
               href="/works"
-              className="mt-6 sm:mt-0 bg-transparent border-2 border-[#F94239]
+              className="order-1 sm:order-2 bg-transparent border-2 border-[#F94239]
                          text-[#F94239] hover:bg-[#F94239] hover:text-white
-                         transition rounded-full px-10 py-3 text-[18px] md:text-[20px]"
+                         transition rounded-full px-6 md:px-10 py-2 md:py-3 text-[16px] md:text-[18px] lg:text-[20px]"
             >
               كل الأعمــال
             </Link>
           </div>
 
-          {/* Projects Grid */}
+          {/* Projects Grid - 2 per row on mobile/tablet, 2 per row on desktop */}
           {worksLoading ? (
-            <div className="text-center py-16">
-              <div className="text-white text-2xl">جاري التحميل...</div>
+            <div className="text-center py-12 md:py-16">
+              <div className="text-white text-xl md:text-2xl">جاري التحميل...</div>
             </div>
           ) : works.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 gap-4 md:gap-6 lg:gap-8">
               {works.map((project, index) => (
                 <div
                   key={project.id}
@@ -280,7 +345,7 @@ export default function Home() {
                       alt={project.title.rendered || 'مشروع'}
                       fill
                       className="object-contain transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 768px) 50vw, 50vw"
                       onError={(e) => {
                         e.target.src = '/assets/placeholder.jpg';
                       }}
@@ -288,11 +353,11 @@ export default function Home() {
                     
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-end justify-center">
-                      <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-6 pb-8">
-                        <h3 className="text-[24px] font-[600] mb-2">
+                      <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-2 md:px-4 lg:px-6 pb-4 md:pb-6 lg:pb-8">
+                        <h3 className="text-[14px] md:text-[18px] lg:text-[24px] font-[600] mb-1 md:mb-2">
                           {project.title.rendered || 'مشروع بدون عنوان'}
                         </h3>
-                        <p className="text-[18px] text-[#FFB808]">
+                        <p className="text-[12px] md:text-[14px] lg:text-[18px] text-[#FFB808]">
                           {getCategoryName(project)}
                         </p>
                       </div>
@@ -302,39 +367,57 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
-              <p className="text-white text-[24px]">لا توجد أعمال متاحة حالياً</p>
+            <div className="text-center py-12 md:py-16">
+              <p className="text-white text-xl md:text-[24px]">لا توجد أعمال متاحة حالياً</p>
             </div>
           )}
         </div>
       </section>
 
 {/* ───── Clients Section ───── */}
-<section className="bg-[#24135F] py-24 md:py-32">
-  <div className="container mx-auto text-center">
+<section className="bg-[#24135F] py-16 md:py-24 lg:py-32">
+  <div className="container mx-auto text-center px-4">
 
     {/* Section title centred like Figma */}
     <h2 className="text-[#F94239] font-medium
-                   text-[48px] md:text-[64px] lg:text-[80px] mb-16">
+                   text-[32px] sm:text-[48px] md:text-[64px] lg:text-[80px] mb-12 md:mb-16">
       عملاؤنــــا
     </h2>
 
-    {/* Auto-scrolling logo strip */}
+    {/* Auto-scrolling logo strip - Seamless infinite loop */}
     <div className="relative overflow-hidden w-full">
-      <div className="flex items-center gap-20 animate-scroll-logos">
-        {/* Render logos multiple times for seamless loop */}
-        {[...clients, ...clients, ...clients].map((src, i) => (
-          <div key={i} className="flex-shrink-0">
-            <Image
-              src={src}
-              alt="logo"
-              height={80}
-              width={120}
-              className="object-contain grayscale-0 h-20 w-auto"
-              unoptimized
-            />
-          </div>
-        ))}
+      <div className="flex animate-scroll-logos-infinite">
+        {/* First set of logos */}
+        <div className="flex items-center gap-12 md:gap-20 shrink-0">
+          {clients.map((src, i) => (
+            <div key={`first-${i}`} className="flex-shrink-0">
+              <Image
+                src={src}
+                alt="logo"
+                height={60}
+                width={90}
+                className="object-contain grayscale-0 h-12 md:h-16 lg:h-20 w-auto"
+                unoptimized
+              />
+            </div>
+          ))}
+        </div>
+        
+        {/* Duplicate set for seamless loop */}
+        <div className="flex items-center gap-12 md:gap-20 shrink-0">
+          {clients.map((src, i) => (
+            <div key={`second-${i}`} className="flex-shrink-0">
+              <Image
+                src={src}
+                alt="logo"
+                height={60}
+                width={90}
+                className="object-contain grayscale-0 h-12 md:h-16 lg:h-20 w-auto"
+                unoptimized
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
 

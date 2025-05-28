@@ -1,4 +1,43 @@
+'use client';
+
+import { useState } from 'react';
+
 export default function ContactPage() {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(null);
+    setError(null);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+      if (!res.ok) throw new Error('فشل إرسال الرسالة. حاول مرة أخرى.');
+      setSuccess('تم إرسال رسالتك بنجاح! سنعود إليك قريباً.');
+      setForm({ name: '', email: '', phone: '', message: '' });
+    } catch (err) {
+      setError(err.message || 'حدث خطأ أثناء الإرسال.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#24135F] text-white">
       {/* Main Content */}
@@ -101,51 +140,65 @@ export default function ContactPage() {
               <h3 className="text-[#FFB808] text-[40px] font-[600] mb-8 text-right">
                 تواصل معنا
               </h3>
-              
-              <form className="space-y-6">
+              {success && <div className="text-green-400 text-center mb-4">{success}</div>}
+              {error && <div className="text-red-400 text-center mb-4">{error}</div>}
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-white text-[18px] mb-2 text-right">الاسم</label>
                     <input
                       type="text"
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
                       className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-[#F94239] text-right"
                       placeholder="اسمك الكامل"
+                      required
                     />
                   </div>
                   <div>
                     <label className="block text-white text-[18px] mb-2 text-right">البريد الإلكتروني</label>
                     <input
                       type="email"
+                      name="email"
+                      value={form.email}
+                      onChange={handleChange}
                       className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-[#F94239] text-right"
                       placeholder="example@email.com"
+                      required
                     />
                   </div>
                 </div>
-                
                 <div>
                   <label className="block text-white text-[18px] mb-2 text-right">رقم الهاتف</label>
                   <input
                     type="tel"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-[#F94239] text-right"
                     placeholder="+974 XXXX XXXX"
                   />
                 </div>
-                
                 <div>
                   <label className="block text-white text-[18px] mb-2 text-right">الرسالة</label>
                   <textarea
                     rows="6"
+                    name="message"
+                    value={form.message}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-[#F94239] text-right resize-none"
                     placeholder="اكتب رسالتك هنا..."
+                    required
                   ></textarea>
                 </div>
-                
                 <div className="text-center">
                   <button
                     type="submit"
                     className="bg-[#F94239] text-white px-12 py-4 rounded-full text-[20px] font-[500] hover:bg-[#d63529] transition-colors"
+                    disabled={loading}
                   >
-                    إرسال الرسالة
+                    {loading ? 'جاري الإرسال...' : 'إرسال الرسالة'}
                   </button>
                 </div>
               </form>

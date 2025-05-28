@@ -94,7 +94,7 @@ export default function WorksPage() {
           
           {/* Page Title */}
           <section className="mb-16 text-center">
-            <h1 className="text-[#FFB808] text-[80px] font-[600] leading-[1.2] mb-8">
+            <h1 className="text-[#FFB808] text-[40px] md:text-[60px] lg:text-[80px] font-[600] leading-[1.2] mb-8">
               أعمالنا
             </h1>
           </section>

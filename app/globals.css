@@ -127,3 +127,24 @@ body {
   width: max-content;
 }
 
+/* Seamless infinite scroll for clients logos */
+@keyframes scroll-logos-infinite {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll-logos-infinite {
+  animation: scroll-logos-infinite 20s linear infinite;
+  display: flex;
+}
+
+/* 360-degree slow rotation animation for flipicon */
+@keyframes flip-rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-flip-rotate {
+  animation: flip-rotate 8s linear infinite;
+}
+
