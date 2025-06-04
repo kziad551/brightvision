@@ -59,9 +59,7 @@ export default function Footer() {
             {/* Center Column: Phone Numbers */}
             <div className="text-center">
               <p className="font-medium">
-                أرقام التواصل: 
-                <a href="tel:+97466103661" className="font-normal hover:underline ml-1" dir="ltr">+974 6610 3661</a>
-                <span className="mx-1">-</span>
+                رقم التواصل: 
                 <a href="tel:+97466646448" className="font-normal hover:underline" dir="ltr">+974 6664 6448</a>
               </p>
             </div>
@@ -69,7 +67,7 @@ export default function Footer() {
             {/* Left Column: Address */}
             <div className="text-center md:text-left">
               <p className="font-medium">
-                العنوان: <span className="font-normal">السد، المرقاب الجديد، مقابل الرقايب مول، مبنى 50 الدور الأول مكتب 4</span>
+                العنوان: <span className="font-normal"> قطــــــر، الدوحــــــة، السد، شارع الـمرقاب الجديد، مبنى 50، الدور 1، مكتــــــب 4</span>
               </p>
             </div>
           </div>
@@ -110,3 +108,4 @@ export default function Footer() {
     </footer>
   );
 }
+ 

@@ -69,29 +69,16 @@ export default function ContactPage() {
               
               {/* Left Column - Contact Details */}
               <div className="text-right space-y-12">
-                
-                {/* Working Hours */}
-                <div>
-                  <h3 className="text-[#FFB808] text-[40px] font-[600] mb-6">
-                    ساعات العمل:
-                  </h3>
-                  <p className="text-white text-[24px] leading-[1.6]">
-                    الأحــــــد – الخميـــــس: 9:00 صباحًـــــا – 6:00 مســــــاءً <span className="text-[#F94239]">(بتوقيــــت الدوحـــــة)</span>
-                  </p>
-                </div>
 
-                {/* Location */}
-                <div>
+                {/* [Phone] */}
+                                <div>
                   <h3 className="text-[#FFB808] text-[40px] font-[600] mb-6">
-                    موقعنــــــــــا
+                  رقم التواصل:
                   </h3>
-                  <p className="text-white text-[24px] leading-[1.6]">
-                    قطــــــر، الدوحــــــة، السد، شارع الـمرقاب الجديد، مبنى 50، الدور 1، مكتــــــب 4
-                  </p>
+                  <a href="tel:+97466646448" className="font-normal hover:underline" dir="ltr">+974 6664 6448</a>
                 </div>
-
-                {/* Email */}
-                <div>
+                                {/* Email */}
+                                <div>
                   <h3 className="text-[#FFB808] text-[40px] font-[600] mb-6">
                     البريــــــد الإلكترونــــــي:
                   </h3>
@@ -102,6 +89,28 @@ export default function ContactPage() {
                     info@thebrightvision.qa
                   </a>
                 </div>
+                                {/* Location */}
+                                <div>
+                  <h3 className="text-[#FFB808] text-[40px] font-[600] mb-6">
+                    موقعنــــــــــا
+                  </h3>
+                  <p className="text-white text-[24px] leading-[1.6]">
+                    قطــــــر، الدوحــــــة، السد، شارع الـمرقاب الجديد، مبنى 50، الدور 1، مكتــــــب 4
+                  </p>
+                </div>
+                {/* Working Hours */}
+                <div>
+                  <h3 className="text-[#FFB808] text-[40px] font-[600] mb-6">
+                    ساعات العمل:
+                  </h3>
+                  <p className="text-white text-[24px] leading-[1.6]">
+                    الأحــــــد – الخميـــــس: 9:00 صباحًـــــا – 6:00 مســــــاءً <span className="text-[#F94239]">(بتوقيــــت الدوحـــــة)</span>
+                  </p>
+                </div>
+
+
+
+
               </div>
 
               {/* Right Column - Map */}

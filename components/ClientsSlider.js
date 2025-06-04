@@ -1,56 +1,28 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, FreeMode } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/free-mode';
 
 export default function ClientsSlider({ clients }) {
-  const sliderRef = useRef(null);
-  const [isPaused, setIsPaused] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!isMounted) return;
-    
-    const slider = sliderRef.current;
-    if (!slider) return;
-
-    let animationId;
-    let scrollAmount = 0;
-    const scrollSpeed = 1;
-
-    const animate = () => {
-      if (!isPaused && slider && isMounted) {
-        scrollAmount += scrollSpeed;
-        
-        // Reset when we've scrolled through one complete set
-        if (scrollAmount >= slider.scrollWidth / 2) {
-          scrollAmount = 0;
-        }
-        
-        slider.scrollLeft = scrollAmount;
-      }
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animationId = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  }, [isPaused, isMounted]);
-
-  // Don't render animation on server
-  if (!isMounted) {
+  // Fallback for SSR
+  if (!isMounted || !clients || clients.length === 0) {
     return (
       <div className="relative overflow-hidden">
-        <div className="flex items-center gap-16 justify-center">
-          {clients.slice(0, 5).map((client, index) => (
-            <div key={index} className="flex-shrink-0">
+        <div className="flex items-center gap-16 justify-center py-4">
+          {clients && clients.slice(0, 5).map((client, index) => (
+            <div key={`fallback-${index}`} className="flex-shrink-0">
               <Image
                 src={client}
                 alt={`Client ${index + 1}`}
@@ -67,33 +39,43 @@ export default function ClientsSlider({ clients }) {
   }
 
   return (
-    <div 
-      className="relative overflow-hidden"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      <div
-        ref={sliderRef}
-        className="flex items-center gap-16 overflow-hidden"
-        style={{ 
-          scrollBehavior: 'auto',
-          width: '100%'
+    <div className="relative overflow-hidden select-none">
+      <Swiper
+        modules={[Autoplay, FreeMode]}
+        spaceBetween={64} // 4rem gap between slides
+        slidesPerView="auto"
+        loop={true}
+        centeredSlides={false}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: true,
+          pauseOnMouseEnter: true,
+          reverseDirection: false,
         }}
+        speed={3000} // Slow, smooth transition
+        freeMode={{
+          enabled: true,
+          momentum: true,
+        }}
+        grabCursor={true}
+        className="clients-swiper"
       >
-        {/* Render clients twice for seamless loop */}
-        {[...clients, ...clients].map((client, index) => (
-          <div key={index} className="flex-shrink-0">
-            <Image
-              src={client}
-              alt={`Client ${index + 1}`}
-              width={120}
-              height={80}
-              className="object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity duration-300"
-              style={{ minWidth: '120px', height: '80px' }}
-            />
-          </div>
+        {clients.map((client, index) => (
+          <SwiperSlide key={index} className="!w-auto">
+            <div className="flex-shrink-0">
+              <Image
+                src={client}
+                alt={`Client ${index + 1}`}
+                width={120}
+                height={80}
+                className="object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{ minWidth: '120px', height: '80px' }}
+                draggable="false"
+              />
+            </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   );
-} 
+}

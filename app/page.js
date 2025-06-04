@@ -38,14 +38,39 @@ const services = [
   },
 ];
 
-const clients = [ // Assuming these paths are correct
-  "/assets/clientslogos/logo in circle RGB white (1).png",
+const clients = [
+  "/assets/clientslogos/961 white.png",
+  "/assets/clientslogos/aen mohamed.png",
+  "/assets/clientslogos/calla beauty.png",
+  "/assets/clientslogos/cube icon1-1.png",
+  "/assets/clientslogos/dahab 1.png",
+  "/assets/clientslogos/Ehjz.png",
+  "/assets/clientslogos/get me flower.png",
+  "/assets/clientslogos/ht.png",
+  "/assets/clientslogos/ichika.png",
+  "/assets/clientslogos/kato.png",
   "/assets/clientslogos/lathat el forn logo png.png",
-  "/assets/clientslogos/5.png",
-  "/assets/clientslogos/white logo png.png",
-  "/assets/clientslogos/Layer 1.png",
-  "/assets/clientslogos/mia bello white logo png.png",
-  "/assets/clientslogos/logo in circle RGB white.png",
+  "/assets/clientslogos/logos-01.png",
+  "/assets/clientslogos/logos-04.png",
+  "/assets/clientslogos/logos-08.png",
+  "/assets/clientslogos/loungy.png",
+  "/assets/clientslogos/Miss Fatima 1.png",
+  "/assets/clientslogos/pause logo-01.png",
+  "/assets/clientslogos/secret sky.png",
+  "/assets/clientslogos/street.png",
+  "/assets/clientslogos/the partener.png",
+  "/assets/clientslogos/toupal.png",
+  "/assets/clientslogos/ابوجباره.png",
+  "/assets/clientslogos/الفريه.png",
+  "/assets/clientslogos/المجلس.png",
+  "/assets/clientslogos/المعالى.png",
+  "/assets/clientslogos/دايموند.png",
+  "/assets/clientslogos/ذاكريتيف.png",
+  "/assets/clientslogos/سبليندد.png",
+  "/assets/clientslogos/شزيين.png",
+  "/assets/clientslogos/فيلاج.png",
+  "/assets/clientslogos/ليل.png",
+  "/assets/clientslogos/منسج.png"
 ];
 
 export default function Home() {
@@ -134,7 +159,7 @@ export default function Home() {
           
           {/* Mobile Flipicon - Top - HIDDEN FOR NOW */}
           {/* <div className="block md:hidden mb-8">
-            <Image
+        <Image
               src="/flipicon.png"
               alt="Flip Icon"
               width={60}
@@ -340,7 +365,7 @@ export default function Home() {
                 >
                   {/* Project Image */}
                   <div className="relative w-full aspect-square bg-[#24135F]">
-                    <Image
+          <Image
                       src={project.featured_image_url || '/assets/placeholder.jpg'}
                       alt={project.title.rendered || 'مشروع'}
                       fill
@@ -384,42 +409,8 @@ export default function Home() {
       عملاؤنــــا
     </h2>
 
-    {/* Auto-scrolling logo strip - Seamless infinite loop */}
-    <div className="relative overflow-hidden w-full">
-      <div className="flex animate-scroll-logos-infinite">
-        {/* First set of logos */}
-        <div className="flex items-center gap-12 md:gap-20 shrink-0">
-          {clients.map((src, i) => (
-            <div key={`first-${i}`} className="flex-shrink-0">
-              <Image
-                src={src}
-                alt="logo"
-                height={60}
-                width={90}
-                className="object-contain grayscale-0 h-12 md:h-16 lg:h-20 w-auto"
-                unoptimized
-              />
-            </div>
-          ))}
-        </div>
-        
-        {/* Duplicate set for seamless loop */}
-        <div className="flex items-center gap-12 md:gap-20 shrink-0">
-          {clients.map((src, i) => (
-            <div key={`second-${i}`} className="flex-shrink-0">
-              <Image
-                src={src}
-                alt="logo"
-                height={60}
-                width={90}
-                className="object-contain grayscale-0 h-12 md:h-16 lg:h-20 w-auto"
-                unoptimized
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    {/* Client Slider Component */}
+    <ClientsSlider clients={clients} />
 
   </div>
 </section>

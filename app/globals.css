@@ -115,6 +115,67 @@ body {
   font-size: 1.5rem;
   border-radius: 0.5rem;
 }
+
+/* Clients slider styles */
+.slider-track {
+  display: flex;
+  align-items: center;
+  gap: 4rem; /* 64px gap between logos */
+  width: fit-content;
+}
+
+.slide-item {
+  flex-shrink: 0;
+}
+
+/* Infinite scroll animation */
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-slide {
+  animation: slide 40s linear infinite;
+}
+
+/* Pause animation on hover */
+.animate-slide:hover {
+  animation-play-state: paused;
+}
+
+/* Legacy animations - keeping for compatibility */
+@keyframes infinite-scroll {
+  0% { 
+    transform: translateX(0); 
+  }
+  100% { 
+    transform: translateX(calc(-100% / 6)); 
+  }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 60s linear infinite;
+  width: max-content;
+}
+
+/* Pause animation on hover */
+.animate-infinite-scroll:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-infinite {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.33%); }
+}
+
+.animate-scroll-infinite {
+  animation: scroll-infinite 45s linear infinite;
+}
+
 @keyframes scroll-logos {
   0%   { transform: translateX(0); }
   100% { transform: translateX(calc(-100% / 3)); }
@@ -146,5 +207,35 @@ body {
 
 .animate-flip-rotate {
   animation: flip-rotate 8s linear infinite;
+}
+
+/* Swiper carousel styles for clients slider */
+.clients-swiper {
+  overflow: visible !important;
+  width: 100%;
+  height: auto;
+}
+
+.clients-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+  align-items: center;
+}
+
+.clients-swiper .swiper-slide {
+  width: auto !important;
+  flex-shrink: 0;
+}
+
+/* Remove any conflicting styles */
+.clients-swiper .swiper-slide img {
+  pointer-events: none;
+}
+
+/* Legacy slider styles - keeping for compatibility but not used */
+.slider-track {
+  display: flex;
+  align-items: center;
+  gap: 4rem; /* 64px gap between logos */
+  width: fit-content;
 }
 
