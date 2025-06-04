@@ -18,12 +18,12 @@ export const metadata = {
   description: "نحول الحلم لعلامة تبقى وتترك أثر - شركة تسويق وإعلان رائدة في قطر",
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
-      { url: '/fav.png', sizes: '32x32', type: 'image/png' },
-      { url: '/fav.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.ico?v=2', sizes: '32x32', type: 'image/x-icon' },
+      { url: '/fav.png?v=2', sizes: '32x32', type: 'image/png' },
+      { url: '/fav.png?v=2', sizes: '16x16', type: 'image/png' },
     ],
-    shortcut: '/favicon.ico',
-    apple: '/fav.png',
+    shortcut: '/favicon.ico?v=2',
+    apple: '/fav.png?v=2',
   },
 };
 
@@ -31,11 +31,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-        <link rel="icon" href="/fav.png" type="image/png" />
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-        <link rel="apple-touch-icon" href="/fav.png" />
-        <meta name="msapplication-TileImage" content="/fav.png" />
+        <link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" />
+        <link rel="icon" href="/fav.png?v=2" type="image/png" />
+        <link rel="shortcut icon" href="/favicon.ico?v=2" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="/fav.png?v=2" />
+        <meta name="msapplication-TileImage" content="/fav.png?v=2" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-light`}
