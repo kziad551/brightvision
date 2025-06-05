@@ -11,6 +11,13 @@ export async function POST(req) {
       return Response.json({ error: 'جميع الحقول مطلوبة.' }, { status: 400 });
     }
 
+    // Debug: Log environment variables (without exposing sensitive data)
+    console.log('SMTP Configuration Check:');
+    console.log('SMTP_HOST:', process.env.SMTP_HOST || 'smtp.gmail.com');
+    console.log('SMTP_PORT:', parseInt(process.env.SMTP_PORT) || 465);
+    console.log('CONTACT_EMAIL_USER exists:', !!process.env.CONTACT_EMAIL_USER);
+    console.log('CONTACT_EMAIL_PASS exists:', !!process.env.CONTACT_EMAIL_PASS);
+
     // More flexible SMTP configuration
     const transporter = nodemailer.createTransporter({
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
@@ -23,11 +30,15 @@ export async function POST(req) {
       // Additional configuration for better reliability
       tls: {
         rejectUnauthorized: false
-      }
+      },
+      debug: process.env.NODE_ENV === 'development', // Enable debug logs in development
+      logger: process.env.NODE_ENV === 'development' // Enable logger in development
     });
 
     // Verify transporter configuration
+    console.log('Verifying SMTP connection...');
     await transporter.verify();
+    console.log('SMTP connection verified successfully');
 
     const mailOptions = {
       from: `"ذا برايت فيجن - نموذج التواصل" <${process.env.SMTP_USER || process.env.CONTACT_EMAIL_USER}>`,
@@ -69,7 +80,14 @@ ${message}
       `
     };
 
-    await transporter.sendMail(mailOptions);
+    console.log('Sending email with options:', {
+      from: mailOptions.from,
+      to: mailOptions.to,
+      subject: mailOptions.subject
+    });
+
+    const result = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', result.messageId);
 
     return Response.json({ 
       success: true, 
@@ -77,7 +95,13 @@ ${message}
     }, { status: 200 });
 
   } catch (err) {
-    console.error('SMTP Error:', err);
+    console.error('SMTP Error Details:', {
+      message: err.message,
+      code: err.code,
+      command: err.command,
+      response: err.response,
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    });
     
     // Better error messages for debugging
     let errorMessage = 'فشل إرسال الرسالة. حاول مرة أخرى.';
@@ -85,6 +109,8 @@ ${message}
       errorMessage = 'خطأ في المصادقة. تحقق من بيانات البريد الإلكتروني.';
     } else if (err.code === 'ECONNECTION') {
       errorMessage = 'فشل الاتصال بخادم البريد الإلكتروني.';
+    } else if (err.responseCode === 535) {
+      errorMessage = 'خطأ في المصادقة. قد تحتاج إلى تمكين "كلمات المرور للتطبيقات" في Gmail.';
     }
     
     return Response.json(
