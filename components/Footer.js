@@ -29,7 +29,7 @@ export default function Footer() {
           </div>
 
           {/* Left Column: Social Media Icons (RTL - last position) */}
-          <div className="flex flex-row lg:flex-col items-center lg:items-start space-x-6 lg:space-x-0 lg:space-y-6 xl:space-y-8 order-3 lg:order-3 rtl:space-x-reverse">
+          <div className="flex flex-row lg:flex-col items-center lg:items-start gap-6 lg:gap-6 xl:gap-8 order-3 lg:order-3">
             <a href="https://www.linkedin.com/company/thebrightvision/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-[#F94239] hover:opacity-75">
               <Image src="/assets/socialmedia-icons/linkedin.png" alt="LinkedIn" width={40} height={40} className="md:w-12 md:h-12" />
             </a>

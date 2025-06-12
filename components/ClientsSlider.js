@@ -26,10 +26,10 @@ export default function ClientsSlider({ clients }) {
               <Image
                 src={client}
                 alt={`Client ${index + 1}`}
-                width={120}
-                height={80}
+                width={160}
+                height={120}
                 className="object-contain filter brightness-0 invert opacity-70"
-                style={{ minWidth: '120px', height: '80px' }}
+                style={{ minWidth: '160px', height: '120px' }}
               />
             </div>
           ))}
@@ -62,14 +62,19 @@ export default function ClientsSlider({ clients }) {
       >
         {clients.map((client, index) => (
           <SwiperSlide key={index} className="!w-auto">
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 flex items-center justify-center">
               <Image
                 src={client}
                 alt={`Client ${index + 1}`}
-                width={120}
-                height={80}
+                width={160}
+                height={120}
                 className="object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{ minWidth: '120px', height: '80px' }}
+                style={{ 
+                  minWidth: '160px', 
+                  minHeight: '120px',
+                  maxWidth: '160px',
+                  maxHeight: '120px'
+                }}
                 draggable="false"
               />
             </div>

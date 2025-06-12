@@ -1,15 +1,17 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function WorksPage() {
   const [allWorks, setAllWorks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [displayedProjects, setDisplayedProjects] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const projectsPerPage = 4;
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const projectsPerLoad = 4;
   const router = useRouter();
 
   useEffect(() => {
@@ -33,7 +35,14 @@ export default function WorksPage() {
           throw new Error(data.message || 'Failed to fetch works');
         }
         
+        // The API already sorts by line number (Line 1, Line 2, etc.)
         setAllWorks(data);
+        
+        // Load first 4 projects
+        const initialProjects = data.slice(0, projectsPerLoad);
+        setDisplayedProjects(initialProjects);
+        setCurrentIndex(projectsPerLoad);
+        setHasMore(data.length > projectsPerLoad);
         
       } catch (err) {
         console.error('Works API fetch failed:', err);
@@ -47,12 +56,40 @@ export default function WorksPage() {
     fetchWorks();
   }, []); // Empty dependency array - only run once
 
-  // Update displayed projects when projects or currentPage changes
+  const loadMoreProjects = useCallback(() => {
+    if (loadingMore || !hasMore) return;
+    
+    setLoadingMore(true);
+    
+    // Simulate a small delay for better UX
+    setTimeout(() => {
+      const nextIndex = currentIndex + projectsPerLoad;
+      const newProjects = allWorks.slice(currentIndex, nextIndex);
+      
+      setDisplayedProjects(prev => [...prev, ...newProjects]);
+      setCurrentIndex(nextIndex);
+      setHasMore(nextIndex < allWorks.length);
+      setLoadingMore(false);
+    }, 300);
+  }, [currentIndex, allWorks, loadingMore, hasMore]);
+
   useEffect(() => {
-    const startIndex = 0;
-    const endIndex = currentPage * projectsPerPage;
-    setDisplayedProjects(allWorks.slice(startIndex, endIndex));
-  }, [allWorks, currentPage]);
+    const handleScroll = () => {
+      if (loading || loadingMore || !hasMore) return;
+      
+      // Check if user has scrolled to bottom (with 200px threshold)
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      if (scrollTop + windowHeight >= documentHeight - 200) {
+        loadMoreProjects();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loadMoreProjects, loading, loadingMore, hasMore]);
 
   const getCategoryName = (project) => {
     if (project._embedded && project._embedded['wp:term'] && project._embedded['wp:term'][0] && project._embedded['wp:term'][0][0]) {
@@ -64,12 +101,6 @@ export default function WorksPage() {
   const handleProjectClick = (projectId) => {
     router.push(`/works/${projectId}`);
   };
-
-  const loadMoreProjects = () => {
-    setCurrentPage(prev => prev + 1);
-  };
-
-  const hasMoreProjects = currentPage * projectsPerPage < allWorks.length;
 
   if (loading) {
     return (
@@ -99,7 +130,7 @@ export default function WorksPage() {
             </h1>
           </section>
 
-          {/* Projects Grid - 2x2 layout */}
+          {/* Projects Grid - 2x2 layout with infinite scroll */}
           <section>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               {displayedProjects.map((project, index) => (
@@ -137,15 +168,17 @@ export default function WorksPage() {
               ))}
             </div>
 
-            {/* Load More Button */}
-            {hasMoreProjects && (
-              <div className="text-center">
-                <button
-                  onClick={loadMoreProjects}
-                  className="bg-[#F94239] text-white px-12 py-4 rounded-full text-[20px] font-[600] hover:bg-[#d63529] transition-colors"
-                >
-                  عرض المزيد
-                </button>
+            {/* Loading indicator for more projects */}
+            {loadingMore && (
+              <div className="text-center py-8">
+                <div className="text-white text-[20px]">جاري تحميل المزيد...</div>
+              </div>
+            )}
+
+            {/* End of projects indicator */}
+            {!hasMore && displayedProjects.length > 0 && (
+              <div className="text-center py-8">
+                <div className="text-[#FFB808] text-[20px]">تم عرض جميع المشاريع</div>
               </div>
             )}
 
@@ -161,4 +194,4 @@ export default function WorksPage() {
       </div>
     </div>
   );
-} 
+}

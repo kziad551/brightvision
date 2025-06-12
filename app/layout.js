@@ -17,25 +17,28 @@ export const metadata = {
   title: "ذا برايت فيجن - The Bright Vision",
   description: "نحول الحلم لعلامة تبقى وتترك أثر - شركة تسويق وإعلان رائدة في قطر",
   icons: {
-    icon: [
-      { url: '/favicon.ico?v=2', sizes: '32x32', type: 'image/x-icon' },
-      { url: '/fav.png?v=2', sizes: '32x32', type: 'image/png' },
-      { url: '/fav.png?v=2', sizes: '16x16', type: 'image/png' },
-    ],
-    shortcut: '/favicon.ico?v=2',
-    apple: '/fav.png?v=2',
+    icon: '/fav.png?v=5',
+    shortcut: '/fav.png?v=5',
+    apple: '/fav.png?v=5',
   },
+  other: {
+    'msapplication-TileColor': '#24135F',
+    'msapplication-TileImage': '/fav.png?v=5',
+    'theme-color': '#24135F',
+  }
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" />
-        <link rel="icon" href="/fav.png?v=2" type="image/png" />
-        <link rel="shortcut icon" href="/favicon.ico?v=2" type="image/x-icon" />
-        <link rel="apple-touch-icon" href="/fav.png?v=2" />
-        <meta name="msapplication-TileImage" content="/fav.png?v=2" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/fav.png?v=5" type="image/png" />
+        <link rel="shortcut icon" href="/fav.png?v=5" type="image/png" />
+        <link rel="apple-touch-icon" href="/fav.png?v=5" />
+        <meta name="msapplication-TileColor" content="#24135F" />
+        <meta name="msapplication-TileImage" content="/fav.png?v=5" />
+        <meta name="theme-color" content="#24135F" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-light`}

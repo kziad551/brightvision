@@ -1,0 +1,17 @@
+{
+  "name": "ذا برايت فيجن - The Bright Vision",
+  "short_name": "Bright Vision",
+  "description": "نحول الحلم لعلامة تبقى وتترك أثر - شركة تسويق وإعلان رائدة في قطر",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#24135F",
+  "theme_color": "#24135F",
+  "icons": [
+    {
+      "src": "/fav.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+} 
