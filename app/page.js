@@ -51,7 +51,6 @@ const clients = [
   "/assets/clientslogos/kato.png",
   "/assets/clientslogos/lathat el forn logo png.png",
   "/assets/clientslogos/logos-04.png",
-  "/assets/clientslogos/LOUNGY.png",
   "/assets/clientslogos/Miss Fatima 1.png",
   "/assets/clientslogos/pause logo-01.png",
   "/assets/clientslogos/secret sky.png",
