@@ -1,5 +1,30 @@
 import nodemailer from 'nodemailer';
 
+/*
+REQUIRED ENVIRONMENT VARIABLES (.env.local):
+
+For Gmail:
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=your-gmail@gmail.com
+SMTP_PASS=your-gmail-app-password (16 characters from Google)
+CONTACT_EMAIL_TO=info@thebrightvision.qa
+
+For SendGrid:
+SMTP_HOST=smtp.sendgrid.net
+SMTP_PORT=587
+SMTP_USER=apikey
+SMTP_PASS=your-sendgrid-api-key
+CONTACT_EMAIL_TO=info@thebrightvision.qa
+
+For Outlook/Hotmail:
+SMTP_HOST=smtp-mail.outlook.com
+SMTP_PORT=587
+SMTP_USER=your-outlook@outlook.com
+SMTP_PASS=your-outlook-password
+CONTACT_EMAIL_TO=info@thebrightvision.qa
+*/
+
 export const runtime = 'nodejs';         // <-- تشغيل داخل Node
 export const dynamic = 'force-dynamic';  // يلغى التخزين المؤقت
 
@@ -19,7 +44,7 @@ export async function POST(req) {
     console.log('CONTACT_EMAIL_PASS exists:', !!process.env.CONTACT_EMAIL_PASS);
 
     // More flexible SMTP configuration
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: parseInt(process.env.SMTP_PORT) || 465,
       secure: process.env.SMTP_SECURE === 'true' || true, // true for 465, false for other ports
@@ -121,4 +146,4 @@ ${message}
       { status: 500 }
     );
   }
-} 
+}

@@ -7,6 +7,7 @@ export default function BookPage() {
     fullName: '',
     email: '',
     phone: '',
+    callDate: '',
     callTime: '',
     additionalDetails: ''
   });
@@ -181,26 +182,16 @@ export default function BookPage() {
   const availableDates = getAvailableDates();
   const availableTimes = getAvailableTimes();
 
-  const handleDateTimeChange = (type, value) => {
-    const currentDateTime = formData.callTime ? new Date(formData.callTime) : new Date();
-    
-    if (type === 'date') {
-      const newDate = new Date(value);
-      newDate.setHours(currentDateTime.getHours(), currentDateTime.getMinutes());
-      handleInputChange('callTime', newDate.toISOString().slice(0, 16));
-    } else if (type === 'time') {
-      const [hours, minutes] = value.split(':');
-      const currentDate = formData.callTime ? new Date(formData.callTime) : new Date();
-      currentDate.setHours(parseInt(hours), parseInt(minutes));
-      handleInputChange('callTime', currentDate.toISOString().slice(0, 16));
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setSuccess(null);
     setError(null);
+
+    // Combine date and time for API
+    const callDateTime = formData.callDate && formData.callTime 
+      ? `${formData.callDate}T${formData.callTime}`
+      : '';
 
     try {
       const response = await fetch('/api/book', {
@@ -210,6 +201,7 @@ export default function BookPage() {
         },
         body: JSON.stringify({
           ...formData,
+          callTime: callDateTime, // Send combined datetime to API
           selectedServices: selectedServices
         })
       });
@@ -223,6 +215,7 @@ export default function BookPage() {
           fullName: '',
           email: '',
           phone: '',
+          callDate: '',
           callTime: '',
           additionalDetails: ''
         });
@@ -352,8 +345,8 @@ export default function BookPage() {
                 </label>
                 <div className="flex flex-col md:flex-row gap-4">
                   <select
-                    value={formData.callTime ? new Date(formData.callTime).toISOString().split('T')[0] : ''}
-                    onChange={(e) => handleDateTimeChange('date', e.target.value)}
+                    value={formData.callDate}
+                    onChange={(e) => handleInputChange('callDate', e.target.value)}
                     className="w-full px-4 py-4 bg-[#24135F] border-2 border-[#F94239] rounded-[20px] text-white focus:outline-none focus:border-[#FFB808] text-right text-[18px]"
                     required
                   >
@@ -365,8 +358,8 @@ export default function BookPage() {
                     ))}
                   </select>
                   <select
-                    value={formData.callTime ? new Date(formData.callTime).toISOString().split('T')[1].substring(0, 5) : ''}
-                    onChange={(e) => handleDateTimeChange('time', e.target.value)}
+                    value={formData.callTime}
+                    onChange={(e) => handleInputChange('callTime', e.target.value)}
                     className="w-full px-4 py-4 bg-[#24135F] border-2 border-[#F94239] rounded-[20px] text-white focus:outline-none focus:border-[#FFB808] text-right text-[18px]"
                     required
                   >
