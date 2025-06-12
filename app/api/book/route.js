@@ -74,7 +74,7 @@ export async function POST(req) {
     const mailOptions = {
       from: `"ذا برايت فيجن - طلب حجز موعد" <kziad551@gmail.com>`,
       replyTo: email,
-      to: 'kziad551@gmail.com',
+      to: 'info@thebrightvision.qa',
       subject: `🔥 طلب حجز موعد جديد من ${fullName} - ذا برايت فيجن`,
       text: `
 الاسم الكامل: ${fullName}

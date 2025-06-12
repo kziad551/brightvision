@@ -67,7 +67,7 @@ export async function POST(req) {
     const mailOptions = {
       from: `"ذا برايت فيجن - نموذج التواصل" <kziad551@gmail.com>`,
       replyTo: email,
-      to: 'kziad551@gmail.com',
+      to: 'info@thebrightvision.qa',
       subject: `🔥 رسالة جديدة من ${name} - ذا برايت فيجن`,
       text: `
 الاسم: ${name}
