@@ -13,25 +13,12 @@ export async function POST(req) {
       return Response.json({ error: 'جميع الحقول المطلوبة يجب ملؤها.' }, { status: 400 });
     }
 
-    // Debug: Log environment variables (without exposing sensitive data)
+    // Debug: Log configuration
     console.log('SMTP Configuration Check for Booking:');
-    console.log('SMTP_HOST:', process.env.SMTP_HOST || 'smtp.gmail.com');
-    console.log('SMTP_PORT:', parseInt(process.env.SMTP_PORT) || 465);
-    console.log('SMTP_USER exists:', !!process.env.SMTP_USER);
-    console.log('SMTP_PASS exists:', !!process.env.SMTP_PASS);
-    console.log('CONTACT_EMAIL_TO exists:', !!process.env.CONTACT_EMAIL_TO);
+    console.log('Using hardcoded Gmail SMTP settings');
     console.log('NODE_ENV:', process.env.NODE_ENV);
-    console.log('VERCEL_ENV:', process.env.VERCEL_ENV);
-    
-    // Additional debug for missing variables
-    if (!process.env.SMTP_USER && !process.env.CONTACT_EMAIL_USER) {
-      console.error('❌ NO SMTP_USER OR CONTACT_EMAIL_USER FOUND!');
-    }
-    if (!process.env.SMTP_PASS && !process.env.CONTACT_EMAIL_PASS) {
-      console.error('❌ NO SMTP_PASS OR CONTACT_EMAIL_PASS FOUND!');
-    }
 
-    // Hardcoded SMTP configuration for production
+    // Hardcoded SMTP configuration for production - NO ENVIRONMENT VARIABLES
     const smtpConfig = {
       host: 'smtp.gmail.com',
       port: 465,
@@ -42,11 +29,10 @@ export async function POST(req) {
       },
       tls: {
         rejectUnauthorized: false
-      },
-      debug: process.env.NODE_ENV === 'development',
-      logger: process.env.NODE_ENV === 'development'
+      }
     };
 
+    console.log('Creating SMTP transporter with hardcoded credentials...');
     const transporter = nodemailer.createTransport(smtpConfig);
 
     // Verify transporter configuration
