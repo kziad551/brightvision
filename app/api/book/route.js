@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer';
 
+// Last updated: 2025-06-12 - Gmail SMTP hardcoded for production
+
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
