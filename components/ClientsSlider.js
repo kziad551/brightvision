@@ -16,6 +16,9 @@ export default function ClientsSlider({ clients }) {
     setIsMounted(true);
   }, []);
 
+  // Cache busting timestamp
+  const cacheVersion = '?v=' + Date.now();
+
   // Fallback for SSR
   if (!isMounted || !clients || clients.length === 0) {
     return (
@@ -24,7 +27,7 @@ export default function ClientsSlider({ clients }) {
           {clients && clients.slice(0, 5).map((client, index) => (
             <div key={`fallback-${index}`} className="flex-shrink-0">
               <Image
-                src={client}
+                src={client + cacheVersion}
                 alt={`Client ${index + 1}`}
                 width={160}
                 height={120}
@@ -64,7 +67,7 @@ export default function ClientsSlider({ clients }) {
           <SwiperSlide key={index} className="!w-auto">
             <div className="flex-shrink-0 flex items-center justify-center">
               <Image
-                src={client}
+                src={client + cacheVersion}
                 alt={`Client ${index + 1}`}
                 width={160}
                 height={120}
